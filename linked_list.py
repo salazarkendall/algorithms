@@ -85,6 +85,20 @@ class LinkedList:
     self.length += 1
     return True
 
+  def remove(self, index):
+    if index < 0 or index >= self.length:
+      return None
+    if index == 0:
+      return self.shift()
+    if index == self.length-1:
+      return self.pop()
+    pre = self.get_node(index-1)
+    temp = pre.next
+    pre.next = temp.next
+    temp.next = None
+    self.length -= 1
+    return temp
+
   def __str__(self) -> str:
     result = '['
     temp = self.head
@@ -105,4 +119,8 @@ for i in range(5):
 print(my_list)
 
 my_list.insert(my_list.length, 3000)
+print(my_list)
+
+print(my_list.length)
+my_list.remove(my_list.length-1)
 print(my_list)
