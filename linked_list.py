@@ -14,8 +14,24 @@ class LinkedList:
 
   def append(self, value):
     new_node = Node(value)
-    self.tail.next = new_node
-    self.tail = new_node
+    if self.head is None:
+      self.head = self.tail = new_node
+    else:
+      self.tail.next = new_node
+      self.tail = new_node
+    self.length += 1
+    return True
+
+  def prepend(self, value):
+    new_node = Node(value)
+    if self.length == 0:
+      self.head = self.tail = new_node
+    else:
+      new_node.next = self.head
+      self.head = new_node
+    self.length += 1
+    return True
+    
 
   def __str__(self) -> str:
     result = '['
@@ -33,5 +49,8 @@ my_list = LinkedList(0)
 
 for i in range(5):
   my_list.append(i)
+
+for i in range(5):
+  my_list.prepend(i*10)
 
 print(my_list)
