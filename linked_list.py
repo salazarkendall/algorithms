@@ -7,9 +7,8 @@ class Node:
     return f'Node value: {self.value}'
 
 class LinkedList:
-  def __init__(self, value):
-    new_node = Node(value)
-    self.head = self.tail = new_node
+  def __init__(self):
+    self.head = self.tail = None
     self.length = 1
 
   def append(self, value):
@@ -56,6 +55,21 @@ class LinkedList:
     if self.length == 0:
       self.tail = None
     return temp
+  
+  def get_node(self, index):
+    if index < 0 or index >= self.length:
+      return None
+    temp = self.head
+    for _ in range(index):
+      temp = temp.next
+    return temp
+  
+  def set_node(self, index, value):
+    temp = self.get_node(index)
+    if temp:
+      temp.value = value
+      return True
+    return False
 
   def __str__(self) -> str:
     result = '['
@@ -69,22 +83,11 @@ class LinkedList:
     return result
 
 # TESTING
-my_list = LinkedList(0)
+my_list = LinkedList()
 
 for i in range(5):
-  my_list.append(i)
-
-for i in range(5):
-  my_list.prepend(i*10)
+  my_list.append(i*2)
 
 print(my_list)
 
-for _ in range(8):
-  my_list.pop()
-
-print(my_list)
-
-my_list.shift()
-my_list.shift()
-
-print(my_list)
+print(my_list.get_node(2))
