@@ -32,6 +32,19 @@ class LinkedList:
     self.length += 1
     return True
     
+  def pop(self):
+    if self.length == 0:
+      return None
+    temp = pre = self.head
+    while temp.next is not None:
+      pre = temp
+      temp = temp.next
+    self.tail = pre
+    self.tail.next = None
+    self.length -= 1
+    if self.length == 0:
+      self.head = self.tail = None
+    return temp
 
   def __str__(self) -> str:
     result = '['
@@ -52,5 +65,10 @@ for i in range(5):
 
 for i in range(5):
   my_list.prepend(i*10)
+
+print(my_list)
+
+for _ in range(8):
+  my_list.pop()
 
 print(my_list)
