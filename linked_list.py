@@ -45,6 +45,17 @@ class LinkedList:
     if self.length == 0:
       self.head = self.tail = None
     return temp
+  
+  def shift(self):
+    if self.head is None:
+      return None
+    temp = self.head
+    self.head = temp.next
+    temp.next = None
+    self.length -= 1
+    if self.length == 0:
+      self.tail = None
+    return temp
 
   def __str__(self) -> str:
     result = '['
@@ -70,5 +81,10 @@ print(my_list)
 
 for _ in range(8):
   my_list.pop()
+
+print(my_list)
+
+my_list.shift()
+my_list.shift()
 
 print(my_list)
