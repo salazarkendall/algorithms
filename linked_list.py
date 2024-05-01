@@ -136,7 +136,24 @@ class LinkedList:
         return True
     return False
 
+  def find_kth_from_end(self, k):
+    if k < 0 or k > self.length:
+      return None
+    
+    slow = fast = self.head
 
+    for _ in range(k):
+      fast = fast.next
+      if fast is None:
+        return None
+    
+    while fast:
+      fast = fast.next
+      slow = slow.next
+    
+    return slow
+
+    
   def __str__(self) -> str:
     result = '['
     temp = self.head
@@ -150,3 +167,11 @@ class LinkedList:
 
 
 # TESTING
+my_list = LinkedList()
+
+for i in range(5):
+  my_list.append(i*10)
+
+print(my_list)
+
+print(my_list.find_kth_from_end(5))
