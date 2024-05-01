@@ -116,7 +116,16 @@ class LinkedList:
       before = temp
       temp = after
 
+  def find_middle_node(self):
+    
+    fast = self.head
+    slow = self.head
 
+    while fast and fast.next:
+      fast = fast.next.next
+      slow = slow.next
+
+    return slow
 
   def __str__(self) -> str:
     result = '['
@@ -129,12 +138,13 @@ class LinkedList:
     result += ']'
     return result
 
+
 # TESTING
 my_list = LinkedList()
 
-for i in range(5):
-  my_list.prepend(i)
+# for i in range(4):
+#   my_list.prepend(i*10)
 
 print(my_list)
-my_list.reverse()
-print(my_list)
+
+print(my_list.find_middle_node())
