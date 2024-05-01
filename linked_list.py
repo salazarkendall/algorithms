@@ -9,7 +9,7 @@ class Node:
 class LinkedList:
   def __init__(self):
     self.head = self.tail = None
-    self.length = 1
+    self.length = 0
 
   def append(self, value):
     new_node = Node(value)
@@ -98,6 +98,25 @@ class LinkedList:
     temp.next = None
     self.length -= 1
     return temp
+  
+  def reverse(self):
+    if self.length == 0:
+      return
+
+    temp = self.head
+    self.head = self.tail
+    self.tail = temp
+
+    before = None
+    after = temp.next
+
+    while temp:
+      after = temp.next
+      temp.next = before
+      before = temp
+      temp = after
+
+
 
   def __str__(self) -> str:
     result = '['
@@ -114,13 +133,8 @@ class LinkedList:
 my_list = LinkedList()
 
 for i in range(5):
-  my_list.append(i*2)
+  my_list.prepend(i)
 
 print(my_list)
-
-my_list.insert(my_list.length, 3000)
-print(my_list)
-
-print(my_list.length)
-my_list.remove(my_list.length-1)
+my_list.reverse()
 print(my_list)
