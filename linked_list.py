@@ -153,7 +153,28 @@ class LinkedList:
     
     return slow
 
-    
+  def partition_list(self, x):
+    if self.head is None:
+      return
+    temp = self.head
+    aux_1 = Node(0)
+    aux_2 = Node(0)
+    lower_than = aux_1
+    bigger_than = aux_2
+    while temp:
+      if temp.value < x:
+        lower_than.next = temp
+        lower_than = temp
+      else:
+        bigger_than.next = temp
+        bigger_than = temp
+      temp = temp.next
+
+    lower_than.next = bigger_than.next = None
+    lower_than.next = aux_2.next
+
+
+
   def __str__(self) -> str:
     result = '['
     temp = self.head
@@ -169,9 +190,12 @@ class LinkedList:
 # TESTING
 my_list = LinkedList()
 
-for i in range(5):
-  my_list.append(i*10)
+my_list.append(3)
+my_list.append(8)
+my_list.append(5)
+my_list.append(10)
+my_list.append(2)
+my_list.append(1)
 
+my_list.partition_list(5)
 print(my_list)
-
-print(my_list.find_kth_from_end(5))
