@@ -187,6 +187,14 @@ class LinkedList:
       print(self)
       current = current.next 
 
+  def binary_to_decimal(self):
+    current = self.head
+    result = 0
+    while current:
+      result = 2*result + current.value
+      current = current.next
+    return result
+
   def __str__(self) -> str:
     result = '['
     temp = self.head
@@ -202,15 +210,8 @@ class LinkedList:
 # TESTING
 my_list = LinkedList()
 
-my_list.append(3)
-my_list.append(8)
-my_list.append(5)
-my_list.append(10)
-my_list.append(10)
-my_list.append(10)
-my_list.append(2)
 my_list.append(1)
-print(my_list)
+my_list.append(0)
+my_list.append(1)
 
-my_list.remove_duplicates()
-print(my_list)
+print(my_list.binary_to_decimal())
