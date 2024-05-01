@@ -127,6 +127,16 @@ class LinkedList:
 
     return slow
 
+  def has_loop(self):
+    slow = fast = self.head
+    while fast and fast.next:
+      slow = slow.next
+      fast = fast.next.next
+      if slow == fast:
+        return True
+    return False
+
+
   def __str__(self) -> str:
     result = '['
     temp = self.head
@@ -140,11 +150,3 @@ class LinkedList:
 
 
 # TESTING
-my_list = LinkedList()
-
-# for i in range(4):
-#   my_list.prepend(i*10)
-
-print(my_list)
-
-print(my_list.find_middle_node())
