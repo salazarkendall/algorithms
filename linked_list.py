@@ -173,7 +173,19 @@ class LinkedList:
     lower_than.next = bigger_than.next = None
     lower_than.next = aux_2.next
 
-
+  def remove_duplicates(self):
+    unique_values = set()
+    current = self.head
+    pre = None
+    while current:
+      if current.value in unique_values:
+        pre.next = current.next
+        self.length -= 1
+      else:
+        unique_values.add(current.value)
+        pre = current
+      print(self)
+      current = current.next 
 
   def __str__(self) -> str:
     result = '['
@@ -194,8 +206,11 @@ my_list.append(3)
 my_list.append(8)
 my_list.append(5)
 my_list.append(10)
+my_list.append(10)
+my_list.append(10)
 my_list.append(2)
 my_list.append(1)
+print(my_list)
 
-my_list.partition_list(5)
+my_list.remove_duplicates()
 print(my_list)
