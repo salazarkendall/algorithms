@@ -180,11 +180,10 @@ class LinkedList:
     while current:
       if current.value in unique_values:
         pre.next = current.next
-        self.length -= 1
+        # self.length -= 1
       else:
         unique_values.add(current.value)
         pre = current
-      print(self)
       current = current.next 
 
   def binary_to_decimal(self):
@@ -194,6 +193,29 @@ class LinkedList:
       result = 2*result + current.value
       current = current.next
     return result
+
+  def reverse_between(self, start_index, end_index):
+    if self.length <= 1:
+      return
+    
+    dummy_node = Node(0)
+    dummy_node.next = self.head
+    previous_node = dummy_node
+
+    for i in range(start_index):
+      previous_node = previous_node.next
+
+    current_node = previous_node.next
+
+    for i in range(end_index - start_index):
+      node_to_move = current_node.next
+      current_node.next = node_to_move.next
+      node_to_move.next = previous_node.next
+      previous_node.next = node_to_move
+    
+    self.head = dummy_node.next
+
+
 
   def __str__(self) -> str:
     result = '['
@@ -210,8 +232,11 @@ class LinkedList:
 # TESTING
 my_list = LinkedList()
 
-my_list.append(1)
-my_list.append(0)
-my_list.append(1)
+for i in range(10):
+  my_list.append(i)
 
-print(my_list.binary_to_decimal())
+print(my_list)
+
+my_list.reverse_between(0, my_list.length-1)
+
+print(my_list)

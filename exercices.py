@@ -1,27 +1,140 @@
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+        
+class LinkedList:
+    def __init__(self, value):
+        new_node = Node(value)
+        self.head = new_node
+        self.length = 1
 
-class Solution:
-    def deleteDuplicates(self, head):
-        pointer = head
-        if head:
-            while pointer.next:
-                if pointer.val == pointer.next.val:
-                    pointer.next == pointer.next.next
-                else:
-                    pointer = pointer.next
-        return head
+    def append(self, value):
+        new_node = Node(value)
+        if self.length == 0:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next is not None:
+                current = current.next
+            current.next = new_node
+        self.length += 1
+        return True
     
-node5 = ListNode(10)
-node4 = ListNode(8, node5)
-node3 = ListNode(10, node4)
-node2 = ListNode(4, node3)
-node1 = ListNode(2, node2)
+    def print_list(self):
+        temp = self.head
+        while temp is not None:
+            print(temp.value)
+            temp = temp.next    
+            
+    def make_empty(self):
+        self.head = None
+        self.length = 0
 
-solution = Solution()
-solution.deleteDuplicates(node1)
+    def reverse_between(self, start_index, end_index):
+        if self.head is None:
+          return
+        
+        current = prev = self.head
+        pre_start = None
+        post_end = None
+    
+        start_node = None
+        end_node = None
+    
+        aux = None
+    
+        for i in range(self.length):
+          if i == start_index:
+            pre_start = prev
+            start_node = current
+          if i == end_index:
+            post_end = current.next
+            end_node = current
+          prev = current
+          current = current.next
+    
+        end_node.next = None
+    
+        aux = start_node
+        start_node = end_node
+        end_node = aux
+        after = aux.next
+        before = None
+    
+        while aux:
+          after = aux.next
+          aux.next = before
+          before = aux
+          aux = after
+    
+        pre_start.next = start_node
+        end_node.next = post_end
+            
+            
+    
 
-print(node1)
+
+linked_list = LinkedList(1)
+linked_list.append(2)
+linked_list.append(3)
+linked_list.append(4)
+linked_list.append(5)
+
+print("Original linked list: ")
+linked_list.print_list()
+
+# Reverse a sublist within the linked list
+linked_list.reverse_between(2, 4)
+print("Reversed sublist (2, 4): ")
+linked_list.print_list()
+
+# Reverse another sublist within the linked list
+linked_list.reverse_between(0, 4)
+print("Reversed entire linked list: ")
+linked_list.print_list()
+
+# Reverse a sublist of length 1 within the linked list
+linked_list.reverse_between(3, 3)
+print("Reversed sublist of length 1 (3, 3): ")
+linked_list.print_list()
+
+# Reverse an empty linked list
+empty_list = LinkedList(0)
+empty_list.make_empty
+empty_list.reverse_between(0, 0)
+print("Reversed empty linked list: ")
+empty_list.print_list()
+
+
+"""
+    EXPECTED OUTPUT:
+    ----------------
+    Original linked list: 
+    1
+    2
+    3
+    4
+    5
+    Reversed sublist (2, 4): 
+    1
+    2
+    5
+    4
+    3
+    Reversed entire linked list: 
+    3
+    4
+    5
+    2
+    1
+    Reversed sublist of length 1 (3, 3): 
+    3
+    4
+    5
+    2
+    1
+    Reversed empty linked list: 
+    None
+    
+"""
