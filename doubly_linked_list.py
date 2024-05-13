@@ -113,6 +113,59 @@ class DoublyLinkedList:
     temp.prev = temp.next = None
     self.length -= 1
     return temp
+  
+  def swap_first_last(self):
+    if self.head is None or self.tail is None:
+      return
+    temp_value = self.tail.value
+    self.tail.value = self.head.value
+    self.head.value = temp_value
+
+  def reverse(self):
+    before = None
+    current = self.head
+
+    while current:
+      after = current.next
+      current.next = before
+      current.prev = after
+      before = current
+      current = after
+
+    self.head, self.tail = self.tail, self.head
+
+  def is_palindrome(self):
+    for _ in range(self.length//2):
+      if self.head.value != self.tail.value:
+        return False
+      self.head = self.head.next
+      self.tail = self.tail.prev
+    return True
+
+  def swap_pairs(self):
+    
+    dummy = Node(0)
+    dummy.next = self.head
+    before = dummy
+
+    while self.head is not None and self.head.next is not None:
+      first_node = self.head
+      second_node = self.head.next
+      before.next = second_node
+      first_node.next = second_node.next
+      second_node.next = first_node
+      second_node.prev = before
+      first_node.prev = second_node
+      if first_node.next:
+        first_node.next.prev = first_node
+      self.head = first_node.next
+      before = first_node
+
+    self.head = dummy.next
+    if self.head is not None:
+      self.head.prev = None
+      dummy.next = None
+
 
   def __str__(self) -> str:
     result = '['
@@ -127,12 +180,11 @@ class DoublyLinkedList:
 
 my_doubly_linked_list = DoublyLinkedList(0)
 
-my_doubly_linked_list.append(1)
-my_doubly_linked_list.append(2)
-
-my_doubly_linked_list.insert(1, 777)
+for i in range(9):
+  my_doubly_linked_list.append(i+1)
 
 print(my_doubly_linked_list)
 
-my_doubly_linked_list.remove(1)
+my_doubly_linked_list.swap_pairs()
+
 print(my_doubly_linked_list)
