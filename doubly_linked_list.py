@@ -62,6 +62,27 @@ class DoublyLinkedList:
     self.length -= 1
     return temp
 
+  def get_node(self, index):
+    if index < 0 or index >= self.length:
+      return None
+    temp = self.head
+
+    if index < self.length/2:
+      for _ in range(index):
+        temp = temp.next
+    else:
+      temp = self.tail
+      for _ in range(self.length - 1, index, -1):
+        temp = temp.prev
+    return temp
+  
+  def set_node(self, index, value):
+    temp = self.get_node(index)
+    if temp is not None:
+      temp.value = value
+      return True
+    return False
+
   def __str__(self) -> str:
     result = '['
     temp = self.head
@@ -78,11 +99,6 @@ my_doubly_linked_list = DoublyLinkedList(0)
 for i in range(10):
   my_doubly_linked_list.append((i+1)*5)
 
-my_doubly_linked_list.shift()
-my_doubly_linked_list.shift()
-my_doubly_linked_list.shift()
-
-deleted_node = my_doubly_linked_list.shift()
-print(deleted_node)
-
+print(my_doubly_linked_list.get_node(8))
+my_doubly_linked_list.set_node(8,11111)
 print(my_doubly_linked_list)
