@@ -215,6 +215,51 @@ class LinkedList:
     
     self.head = dummy_node.next
 
+  def reverse_between_alternate(self, k: int):
+    
+    def check(node, k):
+      answer = True 
+      checker = node
+      for _ in range(k):
+        if checker is not None:
+          checker = checker.next
+        else:
+          answer = False
+      return answer
+    
+    dummy = Node(0)
+    dummy.next = self.head
+    pre, current = dummy, self.head
+ 
+    aux = check(self.head, k)
+
+    while aux:
+      pre.next = self.mini_reverse(pre.next, k)
+      current = pre.next
+      for _ in range(k):
+        if pre.next is not None:
+          pre = pre.next
+          current = current.next
+        else:
+          current = None
+      aux = check(current, k)
+
+    self.head = dummy.next
+      
+
+
+  def mini_reverse(self, head, amount):
+    dummy = Node(0)
+    dummy.next = head
+    pre = dummy
+    current = head
+    for _ in range(amount-1):
+      after = current.next
+      current.next = after.next
+      after.next = pre.next
+      pre.next = after
+    return dummy.next
+
 
 
   def __str__(self) -> str:
@@ -232,11 +277,11 @@ class LinkedList:
 # TESTING
 my_list = LinkedList()
 
-for i in range(10):
-  my_list.append(i)
+for i in range(8):
+  my_list.append(i+1)
 
 print(my_list)
 
-my_list.reverse_between(0, my_list.length-1)
+my_list.reverse_between_alternate(2)
 
 print(my_list)
