@@ -107,27 +107,118 @@ class RecursiveTree:
         node.right = self.__invert_tree(aux)
         return node
 
+    def breadth_first_search(self) -> list:
+        current = self.root
+        queue = []    # <- Node queue
+        results = []  # <- Number list
+        queue.append(current)
+        while len(queue) > 0:
+            current = queue.pop(0)
+            results.append(current.value)
+            if current.left is not None:
+                queue.append(current.left)
+            if current.right is not None:
+                queue.append(current.right)
+        return results
 
-tree = RecursiveTree()
-tree.sorted_list_to_bst([1, 2, 3, 4, 5, 6, 7])
+    def bfs_pre_order(self):
+        results = []
 
-print(tree.root)
-print(tree.root.left)
-print(tree.root.right)
+        def traverse(node):
+            results.append(node.value)
+            if node.left is not None:
+                traverse(node.left)
+            if node.right is not None:
+                traverse(node.right)
+        traverse(self.root)
+        return results
 
-print('---INVERT---')
-tree.invert()
+    def bfs_post_order(self):
+        results = []
 
-print(tree.root)
-print(tree.root.left)
-print(tree.root.right)
+        def traverse(node):
+            if node.left is not None:
+                traverse(node.left)
+            if node.right is not None:
+                traverse(node.right)
+            results.append(node.value)
+        traverse(self.root)
+        return results
 
-print('---ANOTHER THREE---')
-another_tree = RecursiveTree()
-another_tree.insert(4)
-another_tree.insert(2)
+    def bfs_in_order(self):
+        results = []
 
-print(another_tree.root)
-print('---INVERT---')
-another_tree.invert()
-print(another_tree.root)
+        def traverse(node):
+            if node.left is not None:
+                traverse(node.left)
+            results.append(node.value)
+            if node.right is not None:
+                traverse(node.right)
+        traverse(self.root)
+        return results
+
+    def is_valid_bst(self):
+        ordered_list = self.bfs_in_order()
+        for idx, num in enumerate(ordered_list):
+            if idx < len(ordered_list)-1:
+                if num > ordered_list[idx+1]:
+                    return False
+        return True
+
+    def kth_smallest(self, num):
+        if self.root is None:
+            return None
+
+        results = []
+
+        def traverse(node, num_list):
+            if len(num_list) <= num:
+                if node.left is not None:
+                    traverse(node.left, num_list)
+                results.append(node.value)
+                if node.right is not None:
+                    traverse(node.right, num_list)
+
+        traverse(self.root, results)
+        if num >= len(results):
+            return None
+        return results[num-1]
+
+
+my_tree = RecursiveTree()
+
+my_tree.insert(47)
+my_tree.insert(21)
+my_tree.insert(76)
+my_tree.insert(18)
+my_tree.insert(27)
+my_tree.insert(52)
+my_tree.insert(82)
+
+print(my_tree.kth_smallest(3))
+
+# print(my_tree.is_valid_bst())
+
+# tree = RecursiveTree()
+# tree.sorted_list_to_bst([1, 2, 3, 4, 5, 6, 7])
+
+# print(tree.root)
+# print(tree.root.left)
+# print(tree.root.right)
+
+# print('---INVERT---')
+# tree.invert()
+
+# print(tree.root)
+# print(tree.root.left)
+# print(tree.root.right)
+
+# print('---ANOTHER THREE---')
+# another_tree = RecursiveTree()
+# another_tree.insert(4)
+# another_tree.insert(2)
+
+# print(another_tree.root)
+# print('---INVERT---')
+# another_tree.invert()
+# print(another_tree.root)
