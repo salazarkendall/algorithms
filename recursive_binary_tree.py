@@ -5,7 +5,9 @@ class Node:
         self.right = right
 
     def __str__(self) -> str:
-        return f'Value: {self.value}.\n  -Left: {self.left.value if self.left is not None else 'None'}\n  -Right: {self.right.value if self.right is not None else 'None'}'
+        left = self.left.value if self.left is not None else 'None'
+        right = self.right.value if self.right is not None else 'None'
+        return f'Value: {self.value}.\n  -Left: {left}\n  -Right: {right}'
 
 
 class RecursiveTree:
@@ -105,39 +107,27 @@ class RecursiveTree:
         node.right = self.__invert_tree(aux)
         return node
 
-    # def __invert_tree(self, node):
-    #     if node is None:
-    #         return None
-    #     aux = node.left
-    #     node.left = node.right
-    #     node.right = aux
-    #     node.left = self.__invert_tree(node.left)
-    #     node.right = self.__invert_tree(node.right)
-    #     return node
 
+tree = RecursiveTree()
+tree.sorted_list_to_bst([1, 2, 3, 4, 5, 6, 7])
 
-# tree = RecursiveTree()
-# tree.insert(4)
-# tree.insert(2)
+print(tree.root)
+print(tree.root.left)
+print(tree.root.right)
 
-# print(tree.root)
-# tree.invert()
-# print(tree.root)
+print('---INVERT---')
+tree.invert()
 
+print(tree.root)
+print(tree.root.left)
+print(tree.root.right)
 
-# tree = RecursiveTree()
-# tree.balanced_insert([1, 2, 3, 4, 5, 6, 7])
+print('---ANOTHER THREE---')
+another_tree = RecursiveTree()
+another_tree.insert(4)
+another_tree.insert(2)
 
-tree2 = RecursiveTree()
-tree2.sorted_list_to_bst([1, 2, 3, 4, 5, 6, 7])
-
-print(tree2.root)
-print(tree2.root.left)
-print(tree2.root.right)
-
-print('---')
-tree2.invert()
-
-print(tree2.root)
-print(tree2.root.left)
-print(tree2.root.right)
+print(another_tree.root)
+print('---INVERT---')
+another_tree.invert()
+print(another_tree.root)
