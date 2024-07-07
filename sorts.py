@@ -51,4 +51,35 @@ def merge_sort(l):
     return merge(left, right)
 
 
-print(merge([1, 2, 3, 4], [5, 6, 7, 8]))
+def swap(l, i1, i2):
+    temp = l[i1]
+    l[i1] = l[i2]
+    l[i2] = temp
+
+
+def pivot(l, pivot_index, end_index):
+    swap_index = pivot_index
+    for i in range(pivot_index+1, end_index+1):
+        if l[i] < l[pivot_index]:
+            swap_index += 1
+            swap(l, swap_index, i)
+    swap(l, pivot_index, swap_index)
+    return swap_index
+
+
+def __quick_sort(l, left, right):
+    if left < right:
+        pivot_index = pivot(l, left, right)
+        __quick_sort(l, left, pivot_index-1)
+        __quick_sort(l, pivot_index+1, right)
+    return l
+
+def quick_sort(l):
+    return __quick_sort(l, 0, len(my_list)-1)
+
+my_list = [4, 6, 1, 7, 3, 2, 5]
+quick_sort(my_list,)
+
+print(my_list)
+
+# print(merge([1, 2, 3, 4], [5, 6, 7, 8]))
