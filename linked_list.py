@@ -310,21 +310,66 @@ class LinkedList:
     def selection_sort(self):
         self.head = self.__selection_sort(self.head)
 
-    # TODO:
     def insertion_sort(self):
-        pass
+        if self.length < 2:
+            return
+
+        sorted_list_head = self.head
+        unsorted_list_head = self.head.next
+        sorted_list_head.next = None
+
+        while unsorted_list_head is not None:
+            current = unsorted_list_head
+            unsorted_list_head = unsorted_list_head.next
+
+            if current.value < sorted_list_head.value:
+                current.next = sorted_list_head
+                sorted_list_head = current
+            else:
+                search_pointer = sorted_list_head
+                while search_pointer.next is not None and current.value > search_pointer.next.value:
+                    search_pointer = search_pointer.next
+                current.next = search_pointer.next
+                search_pointer.next = current
+
+        self.head = sorted_list_head
+        temp = self.head
+        while temp.next is not None:
+            temp = temp.next
+        self.tail = temp
+
+    def merge_sort(self, l):
+        dummy = Node(0)
+        current = dummy
+        while self.head and l.head:
+            if self.head.value < l.head.value:
+                current.next = self.head
+                self.head = self.head.next
+            else:
+                current.next = l.head
+                l.head = l.head.next
+            current = current.next
+        current.next = self.head or l.head
+        self.head = dummy.next
 
 
 # TESTING
 my_list = LinkedList()
-
-my_list.append(4)
-my_list.append(2)
 my_list.append(1)
-my_list.append(6)
+my_list.append(3)
 my_list.append(5)
+my_list.append(7)
+my_list.append(9)
 
-# my_list.bubble_sort()
-my_list.selection_sort()
+another_list = LinkedList()
+another_list.append(2)
+another_list.append(4)
+another_list.append(6)
+another_list.append(8)
 
+my_list.merge_sort(another_list)
 print(my_list)
+# my_list.bubble_sort()
+# my_list.selection_sort()
+# my_list.insertion_sort()
+# print(my_list)

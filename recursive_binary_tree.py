@@ -165,24 +165,19 @@ class RecursiveTree:
                     return False
         return True
 
-    def kth_smallest(self, num):
-        if self.root is None:
-            return None
-
-        results = []
-
-        def traverse(node, num_list):
-            if len(num_list) <= num:
-                if node.left is not None:
-                    traverse(node.left, num_list)
-                results.append(node.value)
-                if node.right is not None:
-                    traverse(node.right, num_list)
-
-        traverse(self.root, results)
-        if num >= len(results):
-            return None
-        return results[num-1]
+    def kth_smallest(self, k):
+        stack = []
+        node = self.root
+        while stack or node:
+            while node:
+                stack.append(node)
+                node = node.left
+            node = stack.pop()
+            k -= 1
+            if k == 0:
+                return node.value
+            node = node.right
+        return None
 
 
 my_tree = RecursiveTree()
